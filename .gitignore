@@ -400,7 +400,11 @@ dist
 .serverless/**/*.zip
 
 
+.node_repl_history
+.npm
+
 ## db
 
 db-data-postgres
 db-data-mongodb
+

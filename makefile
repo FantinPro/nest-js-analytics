@@ -8,11 +8,11 @@ stop:
 
 restart: stop start
 
-start:
-	npm run start:dev
-
 install:
-	npm install
+	docker-compose exec node npm install
+
+start:
+	docker-compose exec node npm run start:dev
 
 migrate:
 	npx prisma migrate dev

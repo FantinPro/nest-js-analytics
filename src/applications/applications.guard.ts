@@ -1,13 +1,11 @@
 import {
   CanActivate,
   ExecutionContext,
-  HttpCode,
   HttpException,
   HttpStatus,
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
-import { Observable } from 'rxjs';
 import { JwtPayload } from 'src/auth/auth.service';
 import { PrismaService } from 'src/core/prisma/prisma.service';
 
