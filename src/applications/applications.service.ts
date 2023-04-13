@@ -1,7 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { Application } from '@prisma/client';
+import { AppUser, Application } from '@prisma/client';
 import { PrismaService } from 'src/core/prisma/prisma.service';
-import { CreateApplication } from './applications.request';
+import {
+  AddUserToApplication,
+  CreateApplication,
+} from './applications.request';
 import { v4 as uuidv4 } from 'uuid';
 
 export enum ApplicationRoles {
@@ -31,6 +34,33 @@ export class ApplicationsService {
               },
             },
           },
+        },
+      },
+    });
+  }
+
+  async addUsersToApplication(
+    applicationId: string,
+    data: AddUserToApplication,
+  ): Promise<AppUser> {
+    return this.prisma.appUser.create({
+      data: {
+        role: ApplicationRoles.BASIC,
+        User: { connect: { id: data.userId } },
+        Application: { connect: { id: applicationId } },
+      },
+    });
+  }
+
+  async removeUsersToApplication(
+    applicationId: string,
+    userId: string,
+  ): Promise<AppUser> {
+    return this.prisma.appUser.delete({
+      where: {
+        userId_applicationId: {
+          userId: userId,
+          applicationId: applicationId,
         },
       },
     });

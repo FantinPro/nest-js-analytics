@@ -4,25 +4,15 @@ import {
   HttpException,
   HttpStatus,
   Injectable,
-  SetMetadata,
-  UnauthorizedException,
 } from '@nestjs/common';
-import { Reflector } from '@nestjs/core';
-import { JwtPayload } from 'src/auth/auth.service';
 import { PrismaService } from 'src/core/prisma/prisma.service';
 
 @Injectable()
-export class ApplicationMembershipGuard implements CanActivate {
-  constructor(
-    private readonly prisma: PrismaService,
-    private readonly reflector: Reflector,
-  ) {}
+export class ApplicationsCheckerGuard implements CanActivate {
+  constructor(private readonly prisma: PrismaService) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const request = context.switchToHttp().getRequest();
-    const user: JwtPayload = request.user;
-
-    const body = request.body as { applicationId: string };
+    const body = context.switchToHttp().getRequest().body;
 
     if (!body.applicationId) {
       throw new HttpException(
@@ -31,27 +21,16 @@ export class ApplicationMembershipGuard implements CanActivate {
       );
     }
 
-    const appUser = await this.prisma.appUser.findUnique({
+    const application = await this.prisma.application.findUnique({
       where: {
-        userId_applicationId: {
-          userId: user.id,
-          applicationId: body.applicationId,
-        },
+        id: body.applicationId,
       },
     });
 
-    if (!appUser) {
-      throw new UnauthorizedException();
-    }
-
-    const roles = this.reflector.get<string[]>('roles', context.getHandler());
-
-    if (roles && !roles.includes(appUser.role)) {
-      throw new UnauthorizedException();
+    if (!application) {
+      throw new HttpException('application not found', HttpStatus.NOT_FOUND);
     }
 
     return true;
   }
 }
-
-export const Roles = (...roles: string[]) => SetMetadata('roles', roles);

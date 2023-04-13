@@ -5,3 +5,8 @@ export class CreateApplication {
   @Length(2, 50)
   name: string;
 }
+
+export class AddUserToApplication {
+  @IsString()
+  userId: string;
+}
