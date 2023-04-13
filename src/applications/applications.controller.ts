@@ -17,7 +17,7 @@ export class ApplicationsController {
 
   @UseGuards(AuthGuard)
   @Post()
-  createUser(
+  createApplication(
     @Request() req: { user: JwtPayload },
     @Body(
       new ValidationPipe({
@@ -27,5 +27,11 @@ export class ApplicationsController {
     data: CreateApplication,
   ) {
     return this.applicationsService.createApplication(data, req.user.id);
+  }
+
+  @UseGuards(AuthGuard)
+  @Post(':applicationId/users')
+  addUserToApplication() {
+    return 'addUserToApplication';
   }
 }

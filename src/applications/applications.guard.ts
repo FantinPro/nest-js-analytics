@@ -4,14 +4,19 @@ import {
   HttpException,
   HttpStatus,
   Injectable,
+  SetMetadata,
   UnauthorizedException,
 } from '@nestjs/common';
+import { Reflector } from '@nestjs/core';
 import { JwtPayload } from 'src/auth/auth.service';
 import { PrismaService } from 'src/core/prisma/prisma.service';
 
 @Injectable()
-export class ApplicationsGuard implements CanActivate {
-  constructor(private readonly prisma: PrismaService) {}
+export class ApplicationMembershipGuard implements CanActivate {
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly reflector: Reflector,
+  ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
@@ -39,6 +44,14 @@ export class ApplicationsGuard implements CanActivate {
       throw new UnauthorizedException();
     }
 
+    const roles = this.reflector.get<string[]>('roles', context.getHandler());
+
+    if (roles && !roles.includes(appUser.role)) {
+      throw new UnauthorizedException();
+    }
+
     return true;
   }
 }
+
+export const Roles = (...roles: string[]) => SetMetadata('roles', roles);

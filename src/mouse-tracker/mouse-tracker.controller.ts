@@ -5,18 +5,23 @@ import {
   UseGuards,
   ValidationPipe,
 } from '@nestjs/common';
+import {
+  ApplicationMembershipGuard,
+  Roles,
+} from 'src/applications/applications.guard';
+import { AuthGuard } from 'src/auth/auth.guard';
 import { CreateMouseTracker } from './mouse-tracker.request';
 import { MouseTrackerService } from './mouse-tracker.service';
-import { AuthGuard } from 'src/auth/auth.guard';
-import { ApplicationsGuard } from 'src/applications/applications.guard';
+import { ApplicationRoles } from 'src/applications/applications.service';
 
 @Controller('mouse-tracker')
 export class MouseTrackerController {
   constructor(private readonly mouseTrackerService: MouseTrackerService) {}
 
-  @UseGuards(AuthGuard, ApplicationsGuard)
+  @Roles(ApplicationRoles.ADMIN)
+  @UseGuards(AuthGuard, ApplicationMembershipGuard)
   @Post()
-  createUser(
+  createMouseTracker(
     @Body(
       new ValidationPipe({
         whitelist: true,
