@@ -1,7 +1,7 @@
 import { Schema } from 'mongoose';
 
 /**
- * Mongoose Profile Schema
+ * Mongoose Profile Schemae
  */
 export const TrackerEventSchema = new Schema({
   applicationId: { type: String, required: true },
