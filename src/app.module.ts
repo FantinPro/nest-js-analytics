@@ -6,7 +6,7 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
-import { MouseTrackerModule } from './mouse-tracker/mouse-tracker.module';
+import { TrackerEventModule } from './tracker-event/tracker-event.module';
 import { ApplicationsModule } from './applications/applications.module';
 
 @Module({
@@ -16,7 +16,7 @@ import { ApplicationsModule } from './applications/applications.module';
     CoreModule,
     AuthModule,
     UsersModule,
-    MouseTrackerModule,
+    TrackerEventModule,
     ApplicationsModule,
   ],
   controllers: [AppController],

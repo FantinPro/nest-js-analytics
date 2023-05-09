@@ -1,5 +1,4 @@
-.PHONY: up stop restart init-jwt-keys backend-install frontend-install schema-update fixtures start resetdb setup
-
+.PHONY: up stop restart install start migrate studio fixtures
 up:
 	docker-compose up --detach
 

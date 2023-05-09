@@ -5,24 +5,24 @@ import {
   UseGuards,
   ValidationPipe,
 } from '@nestjs/common';
-import { CreateMouseTracker } from './mouse-tracker.request';
-import { MouseTrackerService } from './mouse-tracker.service';
+import { CreateTrackerEvent } from './tracker-event.request';
+import { TrackerEventService } from './tracker-event.service';
 import { ApplicationsCheckerGuard } from 'src/applications/applications.guard';
 
 @Controller('mouse-tracker')
-export class MouseTrackerController {
-  constructor(private readonly mouseTrackerService: MouseTrackerService) {}
+export class TrackerEventController {
+  constructor(private readonly trackerEventService: TrackerEventService) {}
 
   @Post()
   @UseGuards(ApplicationsCheckerGuard)
-  createMouseTracker(
+  createTrackerEvent(
     @Body(
       new ValidationPipe({
         whitelist: true,
       }),
     )
-    data: CreateMouseTracker,
+    data: CreateTrackerEvent,
   ) {
-    return this.mouseTrackerService.create(data);
+    return this.trackerEventService.create(data);
   }
 }
