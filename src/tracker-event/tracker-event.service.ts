@@ -15,4 +15,11 @@ export class TrackerEventService {
     const createdTrackerEvent = new this.TrackerEventModel(data);
     return createdTrackerEvent.save();
   }
+
+  async createMany(data: CreateTrackerEvent[]): Promise<TrackerEvent[]> {
+    const createdTrackerEvents = data.map(
+      (trackerEvent) => new this.TrackerEventModel(trackerEvent),
+    );
+    return this.TrackerEventModel.insertMany(createdTrackerEvents);
+  }
 }

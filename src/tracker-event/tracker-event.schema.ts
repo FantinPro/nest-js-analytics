@@ -7,17 +7,23 @@ export const TrackerEventSchema = new Schema({
   applicationId: { type: String, required: true },
   timestamp: { type: Number, required: true },
   sessionId: { type: String, required: true },
-  x: { type: Number, required: false },
-  y: { type: Number, required: false },
-  resolution: {
+  visitorId: { type: String, required: true },
+  labelService: { type: String, required: true },
+  dimensions: {
     type: {
-      width: { type: Number, required: true },
-      height: { type: Number, required: true },
+      route: { type: String },
+      resolution: {
+        type: {
+          width: { type: Number },
+          height: { type: Number },
+        },
+      },
+      tag: { type: String },
+      event: { type: String },
+      meta: { type: Schema.Types.Mixed },
     },
-    required: false,
+    default: {},
   },
-  tag: { type: String, required: false },
-  event: { type: String, required: false },
 });
 
 export interface TrackerEvent extends Document {
@@ -25,12 +31,16 @@ export interface TrackerEvent extends Document {
   readonly applicationId: string;
   readonly timestamp: number;
   readonly sessionId: string;
-  readonly x?: number;
-  readonly y?: number;
-  readonly resolution?: {
-    width: number;
-    height: number;
+  readonly visitorId: string;
+  readonly dimensions?: {
+    readonly route?: string;
+    readonly resolution?: {
+      width: number;
+      height: number;
+    };
+    readonly tag?: string;
+    readonly event?: string;
+    readonly meta?: Record<string, any>;
+    [key: string]: any;
   };
-  readonly tag?: string;
-  readonly event?: string;
 }

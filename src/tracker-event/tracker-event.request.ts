@@ -1,10 +1,4 @@
-import { Type } from 'class-transformer';
-import {
-  IsNumber,
-  IsOptional,
-  IsString,
-  ValidateNested,
-} from 'class-validator';
+import { IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class Resolution {
   @IsNumber()
@@ -24,24 +18,9 @@ export class CreateTrackerEvent {
   @IsString()
   sessionId: string;
 
-  @IsOptional()
-  @IsNumber()
-  x: number;
-
-  @IsOptional()
-  @IsNumber()
-  y: number;
-
-  @IsOptional()
-  @ValidateNested({ each: true })
-  @Type(() => Resolution)
-  resolution: Resolution;
-
-  @IsOptional()
   @IsString()
-  tag: string;
+  visitorId: string;
 
   @IsOptional()
-  @IsString()
-  event: string;
+  dimensions: Record<string, any>;
 }

@@ -9,7 +9,7 @@ import { CreateTrackerEvent } from './tracker-event.request';
 import { TrackerEventService } from './tracker-event.service';
 import { ApplicationsCheckerGuard } from 'src/applications/applications.guard';
 
-@Controller('mouse-tracker')
+@Controller('tracker-event')
 export class TrackerEventController {
   constructor(private readonly trackerEventService: TrackerEventService) {}
 
@@ -21,8 +21,8 @@ export class TrackerEventController {
         whitelist: true,
       }),
     )
-    data: CreateTrackerEvent,
+    data: CreateTrackerEvent[],
   ) {
-    return this.trackerEventService.create(data);
+    return this.trackerEventService.createMany(data).then(() => ({}));
   }
 }

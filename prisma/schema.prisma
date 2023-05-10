@@ -2,35 +2,36 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+    provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
 }
 
 model User {
-  id           String        @id @default(uuid())
-  name         String
-  email        String        @unique
-  password     String
-  applications      AppUser[]
+    id           String    @id @default(uuid())
+    name         String
+    email        String    @unique
+    password     String
+    applications AppUser[]
 }
 
 model Application {
-  id      String    @id @default(uuid())
-  secret  String
-  name    String
-  users AppUser[]
+    id     String    @id @default(uuid())
+    secret String
+    name   String
+    origin String
+    users  AppUser[]
 }
 
 model AppUser {
-  User          User        @relation(fields: [userId], references: [id])
-  userId        String // relation scalar field (used in the `@relation` attribute above)
-  Application   Application @relation(fields: [applicationId], references: [id])
-  applicationId String // relation scalar field (used in the `@relation` attribute above)
-  role          String
+    User          User        @relation(fields: [userId], references: [id])
+    userId        String // relation scalar field (used in the `@relation` attribute above)
+    Application   Application @relation(fields: [applicationId], references: [id])
+    applicationId String // relation scalar field (used in the `@relation` attribute above)
+    role          String
 
-  @@id([userId, applicationId])
+    @@id([userId, applicationId])
 }

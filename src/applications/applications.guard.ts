@@ -12,20 +12,30 @@ export class ApplicationsCheckerGuard implements CanActivate {
   constructor(private readonly prisma: PrismaService) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const body = context.switchToHttp().getRequest().body;
+    const headers = context.switchToHttp().getRequest().headers;
 
-    if (!body.applicationId) {
-      throw new HttpException(
-        'applicationId is required',
-        HttpStatus.UNPROCESSABLE_ENTITY,
-      );
+    const applicationId = headers['x-application-id'];
+    const applicationSecret = headers['x-application-secret'];
+    const origin = headers.origin;
+
+    let application = null;
+    if (!origin) {
+      // from backend
+      application = await this.prisma.application.findFirst({
+        where: {
+          id: applicationId,
+          secret: applicationSecret,
+        },
+      });
+    } else {
+      // from frontend
+      application = await this.prisma.application.findFirst({
+        where: {
+          id: applicationId,
+          origin: origin,
+        },
+      });
     }
-
-    const application = await this.prisma.application.findUnique({
-      where: {
-        id: body.applicationId,
-      },
-    });
 
     if (!application) {
       throw new HttpException('application not found', HttpStatus.NOT_FOUND);
