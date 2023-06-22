@@ -10,13 +10,13 @@ import {
 } from '@nestjs/common';
 import { AuthService, JwtPayload } from './auth.service';
 import { AuthGuard } from './auth.guard';
-import { UsersService } from 'src/users/users.service';
+import { UserService } from 'src/user/user.service';
 
 @Controller('auth')
 export class AuthController {
   constructor(
     private authService: AuthService,
-    private usersService: UsersService,
+    private usersService: UserService,
   ) {}
 
   @HttpCode(HttpStatus.OK)

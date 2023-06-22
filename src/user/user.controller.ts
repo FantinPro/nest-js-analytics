@@ -1,9 +1,9 @@
 import { Body, Controller, Get, Post, ValidationPipe } from '@nestjs/common';
 import { PrismaService } from 'src/core/prisma/prisma.service';
-import { CreateUser } from './users.request';
+import { CreateUserDto } from './dto/create-user.dto';
 
 @Controller('user')
-export class UsersController {
+export class UserController {
   constructor(private prisma: PrismaService) {}
 
   @Get()
@@ -12,13 +12,13 @@ export class UsersController {
   }
 
   @Post()
-  async createUser(
+  async User(
     @Body(
       new ValidationPipe({
         whitelist: true,
       }),
     )
-    data: CreateUser,
+    data: CreateUserDto,
   ) {
     return await this.prisma.user.create({
       data,
