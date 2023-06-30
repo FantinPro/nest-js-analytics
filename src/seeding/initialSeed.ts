@@ -1,22 +1,41 @@
 import { PrismaClient } from '@prisma/client';
-import { appUserFactory, applicationFactory, userFactory } from './factory';
+import { hashSync } from 'bcrypt';
+import { ApplicationRoles } from '../applications/applications.service';
+import { appUserFactory } from './factory';
 
 const prisma = new PrismaClient();
 
 async function main() {
-  for (let i = 0; i < 15; i++) {
-    const user = await prisma.user.create({
-      data: userFactory(),
-    });
+  const robertUser = await prisma.user.create({
+    data: {
+      name: 'robert',
+      email: 'robert@gmail.com',
+      password: hashSync('test', 10),
+    },
+  });
 
-    const application = await prisma.application.create({
-      data: applicationFactory(),
-    });
+  const basicUser = await prisma.user.create({
+    data: {
+      name: 'basic',
+      email: 'basic@gmail.com',
+      password: hashSync('test', 10),
+    },
+  });
 
-    await prisma.appUser.create({
-      data: appUserFactory(user.id, application.id),
-    });
-  }
+  const application = await prisma.application.create({
+    data: {
+      name: "Robert's app for esgi DEMO",
+      secret: 'ESGIed059713-1de3-4c94-b46b-0c3f2c16105b',
+      origin: 'https://monsupersite.com',
+    },
+  });
+
+  await prisma.appUser.create({
+    data: appUserFactory(robertUser.id, application.id, ApplicationRoles.ADMIN),
+  });
+  await prisma.appUser.create({
+    data: appUserFactory(basicUser.id, application.id, ApplicationRoles.BASIC),
+  });
 }
 
 main()

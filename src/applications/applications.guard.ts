@@ -18,10 +18,6 @@ export class ApplicationsCheckerGuard implements CanActivate {
     const applicationSecret = headers['x-application-secret'];
     const origin = headers.origin;
 
-    console.log('applicationId', applicationId);
-    console.log('applicationSecret', applicationSecret);
-    console.log('origin', origin);
-
     let application = null;
     if (!origin) {
       // from backend

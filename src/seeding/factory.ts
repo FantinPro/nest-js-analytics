@@ -1,6 +1,7 @@
 import { fakerFR as faker } from '@faker-js/faker';
 import { Prisma } from '@prisma/client';
 import { hashSync } from 'bcrypt';
+import { ApplicationRoles } from '../applications/applications.service';
 
 export function userFactory(): Prisma.UserCreateInput {
   return {
@@ -21,6 +22,7 @@ export function applicationFactory(): Prisma.ApplicationCreateInput {
 export function appUserFactory(
   userId: string,
   applicationId: string,
+  role: ApplicationRoles,
 ): Prisma.AppUserCreateInput {
   return {
     User: {
@@ -33,6 +35,6 @@ export function appUserFactory(
         id: applicationId,
       },
     },
-    role: faker.word.sample(),
+    role,
   };
 }
