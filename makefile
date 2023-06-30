@@ -14,7 +14,7 @@ start:
 	docker-compose exec node npm run start:dev
 
 migrate:
-	npx prisma generate && docker-compose exec node npx prisma generate && docker-compose exec node npx prisma migrate dev
+	npx prisma generate && docker-compose exec node npx prisma migrate dev
 
 seed:
 	docker-compose exec node npm run seed:run

@@ -37,7 +37,7 @@ Vous devriez avoir l'api qui tourne sur le port *3000* ansi que *2 utilisateurs*
 *1er user* : robert@gmail.com / mdp : test / role : ADMIN
 *2e user* : basic@gmail.com / mdp : test / role : BASIC
 
-*application* : name : "Robert's app for esgi DEMO" origin : "https://monsupersite.com" secret : "ESGIed059713-1de3-4c94-b46b-0c3f2c16105b"
+*application* : name : "Robert's app for esgi DEMO" / origin : "https://monsupersite.com" / secret : "ESGIed059713-1de3-4c94-b46b-0c3f2c16105b"
 ## Interface visualisation des données SQL
 ```bash
 DATABASE_URL="postgresql://user:password@localhost:5432/nestjsdb?schema=public" npx prisma studio
