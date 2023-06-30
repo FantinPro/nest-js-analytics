@@ -21,6 +21,9 @@ export class CreateTrackerEvent {
   @IsString()
   visitorId: string;
 
+  @IsString()
+  labelService: string;
+
   @IsOptional()
   dimensions: Record<string, any>;
 }

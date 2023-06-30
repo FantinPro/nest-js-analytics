@@ -1,62 +1,238 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+## Projet NestJS
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-  
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+### Groupe 5IW3
+
+Raimbault Fantin 5IW3
+Maziarz Oliwier 5IW3
+Naderi Farid 5IW3
+Lelong Antoine 5IW3
 
 ## Description
+Api NestJS pour le projet de nestJS ainsi que pour le projet de web analytics de Karl Marques.
+4 models :
+- User : gérer les utilisateurs de l'app / Prisma
+- Application : gérer la partie applicationId et application Secret / Prisma
+- AppUser : Relation des deux tables precedents avec un role / Prisma
+- TrackerEvent : gérer les events envoyés par le sdk front & back afin d'analyser les données d'un site / Mongo
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
-## Installation
+## Installation + Run app
+
+Assurez vous d'avoir copier coller le fichier .env inscrit sur MyGes (dans la description du livrable)
 
 ```bash
-$ npm install
-
-$ npm run seed:run
+make up
+make install
+make fixtures
+make start
 ```
 
-## Running the app
+Vous devriez avoir l'api qui tourne sur le port 3000
 
+## Interface visualisation des données SQL
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+DATABASE_URL="postgresql://user:password@localhost:5432/nestjsdb?schema=public" npx prisma studio
 ```
 
-## Support
+⚠️ il faut bien exporter la variable juste avant de lancer `npx prisma studio` et changer `host` en `localhost` car la bdd est conteneurisée !!
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## Fonctionnalités
+Fonctionnalités Nest.js (pour le calcul de la note de 15/20)
+● Contrôleurs ✅
+● Providers ✅
+● Modules ✅
+● Pipes ✅
+● Guard ✅
+● Authentification JWT ✅
+● Gestion d’au moins deux rôles (administrateur, utilisateur, ..) ✅
+● Sécurisation des variables d’environnement ✅
+● Utilisation d’une base de données NoSQL ou SQL ✅ (Prisma + Mongo)
+● Validation des données reçues depuis l’extérieur ✅
+● Logging des erreurs ✅
+● Compression des réponses
+● En-têtes de sécurité ✅
+● Gestion des cors ✅
+● Rate limit
+● Base de données conteneurisée ✅
+● Serveur Nest.js conteneurisé ✅
+● Code commenté ✅
+● Pas de type any ✅
+● Projet documenté ✅
+● Livrable sans variables sensibles ✅
+● Historique Git avec participation de l’ensemble des membres du groupe ✅
 
-## Stay in touch
+## Endpoints (http://localhost:3000)
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
 
-## License
+### User
+- POST /user : Créer un utilisateur
 
-  Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+```json
+Payload
+{
+	"email": "test@malou.io",
+	"password": "test",
+	"name": "testeur"
+}
+```
+
+```json
+Response
+{
+	"id": "198a0996-1474-4134-9f27-1c4897bfb809",
+	"name": "testeur",
+	"email": "test@malou.io",
+	"password": "$2b$10$fDpm3Stmt1JugXnYok.2ReMwmbT7NCIzeDYX/B.VM/yprSLRqpIe."
+}
+```
+
+- POST /auth/login : Se connecter
+
+```json
+Payload
+{
+	"email": "test@malou.io",
+	"password": "test"
+}
+```
+
+```json
+Response
+{
+	"access_token": "xxxxxx"
+}
+```
+
+- GET /auth/profile : Récupérer son profil (avec le token dans le header)
+-H "Authorization: Bearer <token>"
+
+## Application
+
+- POST /applications : Créer une application
+-H "Authorization: Bearer <token>"
+
+```json
+Payload
+{
+	"name": "test-app",
+	"origin": "http://localhost:5173"
+}
+```
+
+
+```json
+Response
+{
+	"id": "73e425d4-df72-46b8-b421-ff31f63e0bc5",
+	"secret": "ESGIed059713-1de3-4c94-b46b-0c3f2c16105b",
+	"name": "test-app",
+	"origin": "http://localhost:5173"
+}
+```
+
+- GET /applications : Récupérer toutes les applications du user
+-H "Authorization: Bearer <token>"
+
+```json
+Response
+[
+	{
+		"id": "73e425d4-df72-46b8-b421-ff31f63e0bc5",
+		"secret": "ESGIed059713-1de3-4c94-b46b-0c3f2c16105b",
+		"name": "test-app",
+		"origin": "http://localhost:5173"
+	}
+]
+```
+
+- GET /applications/first : Récuperer la premier app du user
+-H "Authorization: Bearer <token>"
+
+```json
+Response
+{
+	"id": "73e425d4-df72-46b8-b421-ff31f63e0bc5"
+}
+```
+
+- GET /applications/:applicationId : Récuperer une app du user
+-H "Authorization: Bearer <token>"
+
+```json
+Response
+{
+	"id": "73e425d4-df72-46b8-b421-ff31f63e0bc5",
+	"secret": "ESGIed059713-1de3-4c94-b46b-0c3f2c16105b",
+	"name": "test-app",
+	"origin": "http://localhost:5173"
+}
+```
+
+
+- POST /applications/:applicationId/users : Ajouter un utilisateur à l'application
+**ONLY ADMIN ROLE FROM THE APPLICATION**
+-H "Authorization: Bearer <token>"
+
+```json
+PAYLOAD
+{
+	"userId": "xxxx"
+}
+```
+
+```json
+Response
+{
+	"userId": "3bd5cce5-3ec7-40fe-aed7-71a273f290d5",
+	"applicationId": "73e425d4-df72-46b8-b421-ff31f63e0bc5",
+	"role": "BASIC"
+}
+```
+
+- DELETE /applications/:applicationId/users/:userId : Ajouter un utilisateur à l'application
+**ONLY ADMIN ROLE FROM THE APPLICATION**
+-H "Authorization: Bearer <token>"
+
+```json
+Response
+{
+	"userId": "3bd5cce5-3ec7-40fe-aed7-71a273f290d5",
+	"applicationId": "73e425d4-df72-46b8-b421-ff31f63e0bc5",
+	"role": "BASIC"
+}
+```
+
+- DELETE /applications/:applicationId : Supprimer une application
+**ONLY ADMIN ROLE FROM THE APPLICATION**
+-H "Authorization: Bearer <token>"
+
+```json
+Response
+{
+	"userId": "3bd5cce5-3ec7-40fe-aed7-71a273f290d5",
+	"applicationId": "73e425d4-df72-46b8-b421-ff31f63e0bc5",
+	"role": "BASIC"
+}
+```
+
+- PUT /applications/:applicationId : Update une application
+**ONLY ADMIN ROLE FROM THE APPLICATION**
+-H "Authorization: Bearer <token>"
+
+```json
+PAYLOAD
+{
+	"name": "toto app",
+	"origin": "http://google.com"
+}
+```
+
+```json
+Response
+{
+	"id": "73e425d4-df72-46b8-b421-ff31f63e0bc5",
+	"secret": "ESGIed059713-1de3-4c94-b46b-0c3f2c16105b",
+	"name": "toto app",
+	"origin": "http://google.com"
+}
+```
