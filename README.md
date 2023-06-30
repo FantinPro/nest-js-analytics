@@ -25,11 +25,17 @@ Api NestJS pour le projet de nestJS ainsi que pour le projet de web analytics de
 
 Assurez vous d'avoir copier coller le fichier .env inscrit sur MyGes (dans la description du livrable)
 
+Dans l'ordre :
+
 ```bash
 make up
 make install
+make migrate
 make seed
 make start
+
+
+make stop ## pour stopper les conteneurs
 ```
 
 Vous devriez avoir l'api qui tourne sur le port *3000* ansi que *2 utilisateurs* relié a une *application* avec un role *admin* et un role *basic*.
