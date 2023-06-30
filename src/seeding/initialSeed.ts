@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { userFactory, applicationFactory, appUserFactory } from './factory';
+import { appUserFactory, applicationFactory, userFactory } from './factory';
 
 const prisma = new PrismaClient();
 

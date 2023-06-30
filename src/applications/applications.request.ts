@@ -1,3 +1,4 @@
+import { Transform } from 'class-transformer';
 import { IsString, Length } from 'class-validator';
 
 export class CreateApplication {
@@ -7,6 +8,7 @@ export class CreateApplication {
 
   @IsString()
   @Length(2, 255)
+  @Transform(({ value }) => value.toLowerCase().trim())
   origin: string;
 }
 

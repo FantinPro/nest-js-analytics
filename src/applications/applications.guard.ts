@@ -18,6 +18,10 @@ export class ApplicationsCheckerGuard implements CanActivate {
     const applicationSecret = headers['x-application-secret'];
     const origin = headers.origin;
 
+    console.log('applicationId', applicationId);
+    console.log('applicationSecret', applicationSecret);
+    console.log('origin', origin);
+
     let application = null;
     if (!origin) {
       // from backend
@@ -32,7 +36,7 @@ export class ApplicationsCheckerGuard implements CanActivate {
       application = await this.prisma.application.findFirst({
         where: {
           id: applicationId,
-          origin: origin,
+          origin,
         },
       });
     }

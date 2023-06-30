@@ -1,11 +1,12 @@
 import { fakerFR as faker } from '@faker-js/faker';
 import { Prisma } from '@prisma/client';
+import { hashSync } from 'bcrypt';
 
 export function userFactory(): Prisma.UserCreateInput {
   return {
     name: faker.person.lastName(),
     email: faker.internet.email(),
-    password: faker.internet.password(),
+    password: hashSync('test', 10),
   };
 }
 
@@ -32,6 +33,6 @@ export function appUserFactory(
         id: applicationId,
       },
     },
-    role: faker.random.word(),
+    role: faker.word.sample(),
   };
 }

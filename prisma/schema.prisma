@@ -24,12 +24,14 @@ model Application {
     name   String
     origin String
     users  AppUser[]
+
+    @@unique([id, origin, secret])
 }
 
 model AppUser {
-    User          User        @relation(fields: [userId], references: [id])
+    User          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId        String // relation scalar field (used in the `@relation` attribute above)
-    Application   Application @relation(fields: [applicationId], references: [id])
+    Application   Application @relation(fields: [applicationId], references: [id], onDelete: Cascade)
     applicationId String // relation scalar field (used in the `@relation` attribute above)
     role          String
 
