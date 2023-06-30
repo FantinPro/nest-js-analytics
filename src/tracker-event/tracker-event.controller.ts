@@ -9,7 +9,9 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { HttpErrorByCode } from '@nestjs/common/utils/http-error-by-code.util';
+import { ApplicationMembershipGuard } from 'src/applications/applications-member.guard';
 import { ApplicationsCheckerGuard } from 'src/applications/applications.guard';
+import { AuthGuard } from 'src/auth/auth.guard';
 import { CreateTrackerEvent } from './tracker-event.request';
 import { TrackerEventService } from './tracker-event.service';
 
@@ -31,6 +33,7 @@ export class TrackerEventController {
   }
 
   @Get(':applicationId')
+  @UseGuards(AuthGuard, ApplicationMembershipGuard)
   async getApplicationEvents(
     @Param('applicationId') applicationId: string,
     @Query('width') width: number,

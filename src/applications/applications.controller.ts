@@ -5,6 +5,7 @@ import {
   Get,
   Param,
   Post,
+  Put,
   Request,
   UseGuards,
   ValidationPipe,
@@ -75,5 +76,22 @@ export class ApplicationsController {
       applicationId,
       userId,
     );
+  }
+
+  @Roles(ApplicationRoles.ADMIN)
+  @UseGuards(AuthGuard, ApplicationMembershipGuard)
+  @Delete(':applicationId')
+  deleteApplication(@Param('applicationId') applicationId: string) {
+    return this.applicationsService.deleteApplication(applicationId);
+  }
+
+  @Roles(ApplicationRoles.ADMIN)
+  @UseGuards(AuthGuard, ApplicationMembershipGuard)
+  @Put(':applicationId')
+  updateApplication(
+    @Param('applicationId') applicationId: string,
+    @Body() body: CreateApplication,
+  ) {
+    return this.applicationsService.updateApplication(applicationId, body);
   }
 }

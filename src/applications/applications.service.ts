@@ -16,6 +16,26 @@ export enum ApplicationRoles {
 export class ApplicationsService {
   constructor(private readonly prisma: PrismaService) {}
 
+  async updateApplication(
+    applicationId: string,
+    data: Partial<Application>,
+  ): Promise<Application> {
+    return this.prisma.application.update({
+      where: {
+        id: applicationId,
+      },
+      data,
+    });
+  }
+
+  async deleteApplication(applicationId: string): Promise<Application> {
+    return this.prisma.application.delete({
+      where: {
+        id: applicationId,
+      },
+    });
+  }
+
   async getApplication(applicationId: string): Promise<Application> {
     return this.prisma.application.findUnique({
       where: {
