@@ -1,5 +1,7 @@
 .PHONY: up stop restart install start migrate studio fixtures
-start-global: up install migrate seed start
+
+start-global: 
+	docker compose up --detach && docker compose exec node npm install && npx prisma generate --schema=./prisma/schema.prisma && docker compose exec node npx prisma migrate dev && docker compose exec node npm run seed:run && docker compose exec node npm run start:dev
 
 up:
 	docker compose up --detach
