@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { AppUser, Application } from '@prisma/client';
-import { PrismaService } from 'src/core/prisma/prisma.service';
+import { PrismaService } from '../core/prisma/prisma.service';
 import { v4 as uuidv4 } from 'uuid';
 import {
   AddUserToApplication,

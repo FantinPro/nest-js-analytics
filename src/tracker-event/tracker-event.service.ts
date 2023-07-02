@@ -32,9 +32,7 @@ export class TrackerEventService {
 
       const newValue = map.get(key) + 1;
       if (newValue > minMax.max) {
-        console.log('new max', newValue);
         minMax.max = newValue;
-        console.log('minMax - max', minMax.max);
       }
 
       map.set(key, newValue);
@@ -67,8 +65,6 @@ export class TrackerEventService {
       'dimensions.resolution': { $exists: true },
     }).exec();
     // transform trackerEvents coordinates to match the resolution of input
-
-    console.error('trackerEvents', trackerEvents[0]);
 
     const map = new Map<string, number>();
     const minMax = {
