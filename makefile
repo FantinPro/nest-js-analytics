@@ -1,21 +1,23 @@
 .PHONY: up stop restart install start migrate studio fixtures
+start-global: up install migrate seed start
+
 up:
-	docker-compose up --detach
+	docker compose up --detach
 
 stop:
-	docker-compose down --remove-orphans --volumes --timeout 0
+	docker compose down --remove-orphans --volumes --timeout 0
 
 restart: stop start
 
 install:
-	docker-compose exec node npm install
+	docker compose exec node npm install
 
 start:
-	docker-compose exec node npm run start:dev
+	docker compose exec node npm run start:dev
 
 migrate:
-	npx prisma generate && docker-compose exec node npx prisma migrate dev
+	npx prisma generate --schema=./prisma/schema.prisma && docker compose exec node npx prisma migrate dev
 
 seed:
-	docker-compose exec node npm run seed:run
+	docker compose exec node npm run seed:run
 

@@ -1,4 +1,4 @@
-import { fakerFR as faker } from '@faker-js/faker';
+import { faker } from '@faker-js/faker';
 import { Prisma } from '@prisma/client';
 import { hashSync } from 'bcrypt';
 import { ApplicationRoles } from '../applications/applications.service';
