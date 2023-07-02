@@ -84,18 +84,18 @@ export class TrackerEventService {
       const { x, y } = event.dimensions.meta;
 
       const sourceAspectRatio = resolution.width / resolution.height;
-
       const targetAspectRatio =
         target_resolution.width / target_resolution.height;
-
-      // si le ratio est le même, on peut directement convertir les coordonnées
-      if (sourceAspectRatio === targetAspectRatio) {
+      if (resolution.width <= target_resolution.width) {
+        // si le ratio est le même, on peut directement convertir les coordonnées
+        // if (sourceAspectRatio === targetAspectRatio) {
         const key = this.stringifyKey(
           x * (target_resolution.width / resolution.width),
           y * (target_resolution.height / resolution.height),
         );
 
         this.addToMap(map, key, minMax);
+        // }
       }
 
       // si le ratio target est plus grand que le ratio source il faut cropper la résolution source
@@ -104,17 +104,6 @@ export class TrackerEventService {
         const key = this.stringifyKey(
           x * (croppedWidth / resolution.width),
           y * (target_resolution.height / resolution.height),
-        );
-
-        this.addToMap(map, key, minMax);
-      }
-
-      // si le ratio target est plus petit que le ratio source il faut paddé la résolution source
-      if (sourceAspectRatio < targetAspectRatio) {
-        const paddedHeight = resolution.width / targetAspectRatio;
-        const key = this.stringifyKey(
-          x * (target_resolution.width / resolution.width),
-          y * (paddedHeight / resolution.height),
         );
 
         this.addToMap(map, key, minMax);
