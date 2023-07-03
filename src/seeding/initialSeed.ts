@@ -26,8 +26,9 @@ async function main() {
     const application = await prisma.application.create({
       data: {
         name: "Robert's app for esgi DEMO",
+        id: '38e9c04a-570d-48a5-b02c-89f266d4a983',
         secret: 'ESGIed059713-1de3-4c94-b46b-0c3f2c16105b',
-        origin: 'https://monsupersite.com',
+        origin: 'http://127.0.0.1:5173',
       },
     });
 
