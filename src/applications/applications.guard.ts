@@ -29,6 +29,9 @@ export class ApplicationsCheckerGuard implements CanActivate {
       });
     } else {
       // from frontend
+
+      console.log('origin', origin);
+      console.log('applicationId', applicationId);
       application = await this.prisma.application.findFirst({
         where: {
           id: applicationId,
